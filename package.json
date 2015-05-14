@@ -1,6 +1,6 @@
 {
     "name"          : "kulor-cli",
-    "version"       : "0.0.34" ,
+    "version"       : "0.0.36" ,
     "author"        : {
         "name"      : "Bo.Cheng" ,
         "email"     : "chen8114@sina.com"
@@ -8,7 +8,7 @@
     "engines"       : {
         "node"      : ">= 0.8.0"
     },
-    "man"           : "./doc.helper",
+    "man"           : "./doc.1",
     "bin"           : {
         "kulor"     : "bin/kulor" 
     } ,

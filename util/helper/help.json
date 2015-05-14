@@ -7,6 +7,7 @@
         "install"   : "help developer install kulor plugin dependencies" ,
         "makeConfig": "help developer create a requireConfig quickly" ,
         "plugin"    : "help developer create a kulor plugin" ,
+        "cache"     : "clean user cache",
         "version"   : "show kulor version"
     } ,
     "options": [
