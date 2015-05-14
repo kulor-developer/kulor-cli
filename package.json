@@ -1,6 +1,6 @@
 {
     "name"          : "kulor-cli",
-    "version"       : "0.0.29" ,
+    "version"       : "0.0.32" ,
     "author"        : {
         "name"      : "Bo.Cheng" ,
         "email"     : "chen8114@sina.com"
@@ -19,7 +19,11 @@
     "dependencies"  : {
         "grunt"         : "^0.4.0" ,
         "nopt"          : "^3.0.1",
-        "inquirer"      : "^0.8.2"
+        "inquirer"      : "^0.8.2" ,
+        "nodeunit"      : "^0.9.1" ,
+        "underscore"    : "^1.8.3" ,
+        "bower"         : "^1.4.1" ,
+        "nodegit"       : "^0.4.0"
     } ,
     "preferGlobal"  : true
 }
