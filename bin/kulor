@@ -8,7 +8,7 @@ var grunt   = require( "grunt" ),
     cmds    = require( "../util/cmds" );
 
 function kulor(){
-    this.baseFolder = __dirname.replace( /[^\\|^\/]*$/ , "" );
+    this.baseFolder = __dirname.replace( /bin[\\|\/]*$/ , "" );
     this.inputOpts  = nopt( cmds.options , cmds.shortOpts , process.argv , 2 );
     this.cwd        = process.cwd() + "/";
     this.bowerDir   = this.cwd + "bower_components/";
