@@ -1,4 +1,5 @@
 var log     = require( "./log" ) ,
+    os      = require( "os" ) ,
     grunt   = require( "grunt" );
 
 var file    = module.exports    = {} ,
@@ -35,6 +36,10 @@ file.copy   = function( src , target ){
             if( _regIsDir.test( target ) ){
                 target     = target + src.replace( /^.*[\\|\/]/ , "" );
             }
+        }
+        if( os.type().indexOf( "Windows_NT" ) > -1 ){
+            src     = src.replace( /\\/g , "\/" );
+            target  = target.replace( /\\/g , "\/" );
         }
         for( var i = 0 , len = _paths.length; i < len; i++ ){
             copySingleFile( _paths[ i ] , src , target );
