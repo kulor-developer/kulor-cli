@@ -2,52 +2,7 @@
 "use strict";
 process.title   = "kulor";
 
-var grunt   = require( "grunt" ),
-    nopt    = require( "nopt" ),
-    log     = require( "../util/log" ),
-    cmds    = require( "../util/cmds" );
+var Kulor   = require( "../lib/kulor" ) ,
+    kulor   = new Kulor();
 
-function kulor(){
-    this.baseFolder = __dirname.replace( /bin[\\|\/]*$/ , "" );
-    this.inputOpts  = nopt( cmds.options , cmds.shortOpts , process.argv , 2 );
-    this.cwd        = process.cwd() + "/";
-    this.bowerDir   = this.cwd + "bower_components/";
-    this.packageJson= JSON.parse( grunt.file.read( this.baseFolder + "package.json" ) );
-    this.cacheDir   = this.baseFolder + "userCache/";
-}
-
-kulor.fn = kulor.prototype;
-
-kulor.fn.require = function( moduleName , newoduleName ){
-    var _modalName  = newoduleName || moduleName;
-    this[ _modalName ] = require( this.baseFolder + "lib/" + moduleName );
-    return this;
-};
-
-kulor.fn.extend = function( json ){
-    for( var a in json ){
-        this[ a ] = json[ a ];
-    }
-}
-
-kulor.fn.init = function(){
-    var _cmd;
-    if( process.argv.length >= 3 ){
-        _cmd = cmds.cmd[ process.argv[ 2 ] ];
-        if( this.inputOpts.help ) {
-            _cmd    = "help";
-        }
-        if( _cmd == "version" ){
-            log( "kulor version :" + this.packageJson.version );
-        } else if( _cmd ){
-            this.require( _cmd );
-            this[ _cmd ].apply( this );
-        } else {
-            log( "Error commend input , run \"kulor -h\" for more" );
-        }
-    } else {
-        log( "run \"kulor -h\" for more" );
-    }
-};
-
-new kulor().init();
+kulor.init();

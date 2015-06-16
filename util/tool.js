@@ -1,9 +1,7 @@
-/**
- * Created by vip on 15/4/14.
- */
 var cp      = require( "child_process" ),
     grunt   = require( "grunt" ) ,
-    log     = require( "./log" );
+    log     = require( "./log" ) ,
+    path    = require( "path" );
 
 module.exports = {
     /*!
@@ -11,7 +9,7 @@ module.exports = {
      *  @return     {json}
      */
     getUserKulorJson    : function(){
-        var _file   = process.cwd() + "/kulor.json";
+        var _file   = path.resolve( process.cwd() , "kulor.json" );
         if( grunt.file.isFile( _file ) ){
             return grunt.file.readJSON( _file );
         } else {

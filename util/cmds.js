@@ -1,6 +1,3 @@
-/**
- * Created by vip on 15/4/1.
- */
 module.exports.options   = {
     "init"        : Boolean ,
     "install"     : Boolean ,

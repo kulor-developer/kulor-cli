@@ -1,6 +1,3 @@
-/**
- * Created by vip on 15/3/31.
- */
 function log( obj , pre ){
     var i, len, pre = pre || [];
     if( obj instanceof Array ){
