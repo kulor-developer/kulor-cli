@@ -14,7 +14,7 @@
     } ,
     "repository"    : { 
         "type"      : "git" ,
-        "url"       : "https://github.com/nihaox1/kulor-cli.git"
+        "url"       : "https://github.com/kulor-developer/kulor-cli.git"
     } ,
     "dependencies"  : {
         "grunt"         : "^0.4.0" ,

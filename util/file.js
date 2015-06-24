@@ -1,5 +1,6 @@
 var log     = require( "./log" ) ,
     os      = require( "os" ) ,
+    path    = require( "path" ) ,
     grunt   = require( "grunt" );
 
 var file    = module.exports    = {} ,
@@ -7,42 +8,39 @@ var file    = module.exports    = {} ,
 
 function copySingleFile( filePath , rootDir , targetDir ){
     var _dir;
-    if( !grunt.file.exists( targetDir ) ){
-        grunt.file.mkdir( targetDir );
-    }
-    _dir            = filePath.replace( rootDir , targetDir );
+    _dir            = path.resolve( filePath.replace( rootDir , targetDir ) );
     grunt.file.copy( filePath , _dir , { force : true } );
 }
 
 
 /*!
  *  允许递归文件夹式的copy
+ *  @from   {dir}
+ *  @target {dir}
+ *  @cancelCurrentDir   {boolean}   不copy当前目录 
  */
-file.copy   = function( src , target ){
-    var _paths      = [],
-        _regIsDir   = /[\\|\/]$/;
-    src     = src.replace( /^(\.[\\|\/])/ , "" );
-    if( grunt.file.isFile( src ) ){
-        grunt.file.copy( src , target );
-    } else if( grunt.file.isDir( src ) ){
-        grunt.file.recurse( src , function( filepath ){
+file.copy   = function( from , target , cancelCurrentDir ){
+    var _paths      = [] ;
+    from     = path.resolve( from );
+    target   = path.resolve( target );
+    if( grunt.file.isFile( from ) ){
+        grunt.file.copy( from , target );
+    } else if( grunt.file.isDir( from ) ){
+        grunt.file.recurse( from , function( filepath ){
             if( grunt.file.isFile ){
-                _paths.push( filepath );
+                _paths.push( path.resolve( filepath ) );
             } else {
                 log( filepath );
             }
         } );
-        if( !_regIsDir.test( src ) ){
-            if( _regIsDir.test( target ) ){
-                target     = target + src.replace( /^.*[\\|\/]/ , "" );
+        if( !cancelCurrentDir ){
+            target     = path.resolve( target , path.basename( from ) );
+            if( !grunt.file.exists( target ) ){
+                grunt.file.mkdir( target );
             }
         }
-        if( os.type().indexOf( "Windows_NT" ) > -1 ){
-            src     = src.replace( /\\/g , "\/" );
-            target  = target.replace( /\\/g , "\/" );
-        }
         for( var i = 0 , len = _paths.length; i < len; i++ ){
-            copySingleFile( _paths[ i ] , src , target );
+            copySingleFile( _paths[ i ] , from , target );
         }
     }
 }
