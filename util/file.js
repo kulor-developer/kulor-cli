@@ -44,3 +44,36 @@ file.copy   = function( from , target , cancelCurrentDir ){
         }
     }
 }
+
+/*!
+ *  @filePath   {string}    
+ *  @contentObj {object}    json格式内容
+ */
+file.writeYAML  = function( filePath , contentObj ){
+    var getYamlString = function( yaml , space ){
+        var _strAl      = [] ,
+            _strTmp     = [];
+        space   = space || "";
+        for( var a in yaml ){
+            if( yaml[ a ].hasOwnProperty( "length" ) ){
+                _strTmp.length  = 0;
+                _strTmp.push( space + a + ":" );
+                if( typeof yaml[ a ] === "string" ){
+                    _strTmp[ 0 ]    += " \"" + yaml[ a ] + "\"";
+                } else {
+                    yaml[ a ].map( function( o ){
+                        _strTmp.push( space + "    - " + o );
+                    } );
+                }
+                _strAl.push( _strTmp.join( "\n" ) );
+            } else if( typeof yaml[ a ] === "object" ){
+                _strAl.push( space + a + ":\n" + getYamlString( yaml[ a ] , space + "    ") );
+            } else {
+                // 主要针对string boolean值等
+                _strAl.push( space + a + ":" + yaml[ a ] );
+            }
+        }
+        return _strAl.join( "\n" );
+    }
+    grunt.file.write( filePath , getYamlString( contentObj , "" ) );
+}
