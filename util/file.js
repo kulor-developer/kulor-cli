@@ -24,7 +24,11 @@ file.copy   = function( from , target , cancelCurrentDir ){
     from     = path.resolve( from );
     target   = path.resolve( target );
     if( grunt.file.isFile( from ) ){
-        grunt.file.copy( from , target );
+        if( /\..*$/.test( target ) ){
+            grunt.file.copy( from , target );
+        } else {
+            grunt.file.copy( from , path.resolve( target , from.replace( /.*[\\|\/]/ , "" ) ) );
+        }
     } else if( grunt.file.isDir( from ) ){
         grunt.file.recurse( from , function( filepath ){
             if( grunt.file.isFile ){
@@ -57,7 +61,7 @@ file.writeYAML  = function( filePath , contentObj ){
         for( var a in yaml ){
             if( yaml[ a ].hasOwnProperty( "length" ) ){
                 _strTmp.length  = 0;
-                _strTmp.push( space + a + ":" );
+                _strTmp.push( space + a + " : " );
                 if( typeof yaml[ a ] === "string" ){
                     _strTmp[ 0 ]    += " \"" + yaml[ a ] + "\"";
                 } else {
@@ -70,7 +74,7 @@ file.writeYAML  = function( filePath , contentObj ){
                 _strAl.push( space + a + ":\n" + getYamlString( yaml[ a ] , space + "    ") );
             } else {
                 // 主要针对string boolean值等
-                _strAl.push( space + a + ":" + yaml[ a ] );
+                _strAl.push( space + a + " : " + yaml[ a ] );
             }
         }
         return _strAl.join( "\n" );
